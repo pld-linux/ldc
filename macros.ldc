@@ -1,0 +1,9 @@
+#
+# RPM macros for D applications.
+#
+# Include directory where all .di or .d file are installed.
+%_d_includedir %{_includedir}/d
+# Compile options for ldc and make file
+%_d_optflags -release -w -g -O1
+# Lib directory path
+%_d_libdir %{_libdir}/d/
