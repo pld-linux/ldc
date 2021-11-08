@@ -5,13 +5,13 @@
 %define	bootstrap_version 1.27.1
 Summary:	LLVM D Compiler
 Name:		ldc
-Version:	1.27.1
+Version:	1.28.0
 Release:	1
 # The DMD frontend in dmd/* GPL version 1 or artistic license
 # The files gen/asmstmt.cpp and gen/asm-*.hG PL version 2+ or artistic license
 License:	BSD
 Source0:	https://github.com/ldc-developers/ldc/releases/download/v%{version}/%{name}-%{version}-src.tar.gz
-# Source0-md5:	8f2f3b606f78350cc9f2ae75bebe1fa7
+# Source0-md5:	719213b2ba5e7f7dd3e5092fb3950c48
 Source1:	https://github.com/ldc-developers/ldc/releases/download/v%{bootstrap_version}/%{name}2-%{bootstrap_version}-linux-x86_64.tar.xz
 # Source1-md5:	1bc671b41ba59848e3d0ffe74c83fc7b
 Source3:	macros.%{name}
@@ -34,7 +34,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define	dmdfe_major 2
 %define	dmdfe_minor 0
-%define	dmdfe_bump  97
+%define	dmdfe_bump  98
 %define	dmdfe       %{dmdfe_major}.%{dmdfe_minor}.%{dmdfe_bump}
 
 # Unresolved symbols found: _D4core9exception6_storeG128v
