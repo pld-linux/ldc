@@ -6,7 +6,7 @@
 Summary:	LLVM D Compiler
 Name:		ldc
 Version:	1.28.0
-Release:	1
+Release:	2
 # The DMD frontend in dmd/* GPL version 1 or artistic license
 # The files gen/asmstmt.cpp and gen/asm-*.hG PL version 2+ or artistic license
 License:	BSD
@@ -121,6 +121,7 @@ cd build-bootstrap2
 	-S .. \
 	-B build \
 	-DD_COMPILER:PATH=$(pwd)/../build-bootstrap1/bin/ldmd2 \
+	-DLDC_WITH_LLD:BOOL=OFF \
 	%{nil}
 %{__cmake} --build build
 cd ..
@@ -134,6 +135,7 @@ cd ..
 %if %{with bootstrap}
 	-DD_COMPILER:PATH=$(pwd)/build-bootstrap2/build/bin/ldmd2 \
 %endif
+	-DLDC_WITH_LLD:BOOL=OFF \
 	%{nil}
 
 %{__cmake} --build build
