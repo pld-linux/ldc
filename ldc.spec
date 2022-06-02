@@ -27,6 +27,7 @@ BuildRequires:	libconfig-devel
 BuildRequires:	libedit-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	llvm-devel >= 12
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 2.008
 BuildRequires:	zlib-devel
 ExclusiveArch:	%{x8664}
