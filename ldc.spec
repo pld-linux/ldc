@@ -5,13 +5,13 @@
 %define	bootstrap_version 1.27.1
 Summary:	LLVM D Compiler
 Name:		ldc
-Version:	1.29.0
+Version:	1.30.0
 Release:	1
 # The DMD frontend in dmd/* GPL version 1 or artistic license
 # The files gen/asmstmt.cpp and gen/asm-*.hG PL version 2+ or artistic license
 License:	BSD
 Source0:	https://github.com/ldc-developers/ldc/releases/download/v%{version}/%{name}-%{version}-src.tar.gz
-# Source0-md5:	34a5314be02d809258267fb1ba62e8a8
+# Source0-md5:	871cec3741a884ff29f564175b919e4d
 Source1:	https://github.com/ldc-developers/ldc/releases/download/v%{bootstrap_version}/%{name}2-%{bootstrap_version}-linux-x86_64.tar.xz
 # Source1-md5:	1bc671b41ba59848e3d0ffe74c83fc7b
 Source3:	macros.%{name}
@@ -34,11 +34,6 @@ BuildRequires:	xz
 BuildRequires:	zlib-devel
 ExclusiveArch:	%{x8664}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define	dmdfe_major 2
-%define	dmdfe_minor 0
-%define	dmdfe_bump  99
-%define	dmdfe       %{dmdfe_major}.%{dmdfe_minor}.%{dmdfe_bump}
 
 # Unresolved symbols found: _D4core9exception6_storeG128v
 %define	skip_post_check_so libphobos2-ldc-debug-shared.so.*
@@ -194,18 +189,18 @@ rm -rf $RPM_BUILD_ROOT
 %files druntime
 %defattr(644,root,root,755)
 %doc runtime/druntime/README.md runtime/README runtime/druntime/LICENSE.txt
-%{_libdir}/libdruntime-ldc-debug-shared.so.%{dmdfe}
-%{_libdir}/libdruntime-ldc-debug-shared.so.%{dmdfe_bump}
-%{_libdir}/libdruntime-ldc-shared.so.%{dmdfe}
-%{_libdir}/libdruntime-ldc-shared.so.%{dmdfe_bump}
+%{_libdir}/libdruntime-ldc-debug-shared.so.*.*
+%ghost %{_libdir}/libdruntime-ldc-debug-shared.so.100
+%{_libdir}/libdruntime-ldc-shared.so.*.*
+%ghost %{_libdir}/libdruntime-ldc-shared.so.100
 
 %files phobos
 %defattr(644,root,root,755)
 %doc runtime/phobos/LICENSE_1_0.txt
-%{_libdir}/libphobos2-ldc-debug-shared.so.%{dmdfe}
-%{_libdir}/libphobos2-ldc-debug-shared.so.%{dmdfe_bump}
-%{_libdir}/libphobos2-ldc-shared.so.%{dmdfe}
-%{_libdir}/libphobos2-ldc-shared.so.%{dmdfe_bump}
+%{_libdir}/libphobos2-ldc-debug-shared.so.*.*
+%ghost %{_libdir}/libphobos2-ldc-debug-shared.so.100
+%{_libdir}/libphobos2-ldc-shared.so.*.*
+%ghost %{_libdir}/libphobos2-ldc-shared.so.100
 
 %files phobos-geany-tags
 %defattr(644,root,root,755)
