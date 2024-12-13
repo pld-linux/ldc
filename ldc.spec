@@ -5,6 +5,7 @@
 
 %define	bootstrap_version 1.27.1
 Summary:	LLVM D Compiler
+Summary(pl.UTF-8):	Kompilator D oparty na LLVM
 Name:		ldc
 Version:	1.30.0
 Release:	1
@@ -37,7 +38,7 @@ BuildRequires:	zlib-devel
 ExclusiveArch:	%{x8664}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-# Unresolved symbols found: _D4core9exception6_storeG128v
+# Unresolved symbols found: _D4core9exception6_storeG128v (core.exception._store)
 %define	skip_post_check_so libphobos2-ldc-debug-shared.so.*
 
 %description
@@ -48,8 +49,17 @@ It uses the official DMD compiler frontend to support the latest
 version of D, and relies on the LLVM Core libraries for code
 generation.
 
+%description -l pl.UTF-8
+LDC to przenośny kompilator języka programowania D ze współczesnymi
+możliwościami optymalizacji i generowania kodu.
+
+Wykorzystuje frontend oficjalnego kompilatora DMD, aby obsłużyć
+najnowszą wersję D i polega na bibliotekach LLVM Core do generowania
+kodu.
+
 %package druntime
 Summary:	Runtime library for D
+Summary(pl.UTF-8):	Biblioteka uruchomieniowa dla D
 License:	Boost
 
 %description druntime
@@ -58,44 +68,48 @@ language. It includes the system code required to support the garbage
 collector, associative arrays, exception handling, array vector
 operations, startup/shutdown, etc.
 
-%description druntime -l fr
+%description druntime -l fr.UTF-8
 Druntime est la bibliothèque minimal requise pour supporter la
 programmation en D. Est inclut le code système requis pour supporter
 le ramasse miette, tableau associatif, gestion des exceptions,
 opertation sur des vecteurs, démarage/extinction, etc
 
+%description druntime -l pl.UTF-8
+Druntime to minimalna biblioteka wymagana do obsługi języka
+programowania D. Zawiera kod systemowy wymagany do obsługi
+odśmiecacza, tablice asocjacyjne, obsługę wyjątków, operacje na
+wektorach tablic, kod startowy/końcowy itp.
+
 %package phobos
-Summary:	Standard Runtime Library
+Summary:	D Standard Runtime Library
+Summary(pl.UTF-8):	Standardowa biblioteka uruchomieniowa D
 License:	Boost
 Requires:	%{name}-druntime = %{version}-%{release}
 
 %description phobos
-Each module in Phobos conforms as much as possible to the following
-design goals. These are goals rather than requirements because D is
-not a religion, it's a programming language, and it recognizes that
-sometimes the goals are contradictory and counterproductive in certain
-situations, and programmers have jobs that need to get done
+Phobos is the standard library that comes with the D Programming
+Language Compiler (<http://dlang.org/>).
 
-%description phobos -l fr
-Chaque module de Phobos est conforme autant que possible à la
-conception suivante objectifs. Ce sont des objectifs plutôt que des
-exigences car D n'est pas une religion, c'est un language de
-programmation, et il reconnaît que, parfois, les objectifs sont
-contradictoires et contre-productif dans certaines situations, et les
-programmeurs ont travail qui doit être effectué.
+%description phobos -l pl.UTF-8
+Phobos to biblioteka standardowa dostarczana z kompilatorem języka
+programowania D (<http://dlang.org/>).
 
 %package phobos-geany-tags
 Summary:	Support for enable autocompletion in geany
+Summary(pl.UTF-8):	Obsługa automatycznego dopełniania kodu w geany
 Requires:	%{name} = %{version}-%{release}
 Requires:	geany
 BuildArch:	noarch
 
 %description phobos-geany-tags
-Enable autocompletion for phobos library in geany (IDE)
+Enable autocompletion for Phobos library in geany (IDE).
 
-%description phobos-geany-tags -l fr
+%description phobos-geany-tags -l fr.UTF-8
 Active l'autocompletion pour pour la bibliothèque phobos dans geany
-(IDE)
+(IDE).
+
+%description phobos-geany-tags -l pl.UTF-8
+Obsługa automatycznego dopełniania dla biblioteki Phobos w IDE geany.
 
 %prep
 %setup -q -n %{name}-%{version}-src
