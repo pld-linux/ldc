@@ -1,6 +1,7 @@
 #
 # Conditional build:
-%bcond_with	bootstrap		# bootstrap from pre-compiled binaries
+%bcond_with	bootstrap	# bootstrap from pre-compiled binaries
+%bcond_without	geany		# geany autocompletion support
 
 %define	bootstrap_version 1.27.1
 Summary:	LLVM D Compiler
@@ -22,6 +23,7 @@ BuildRequires:	bash-completion
 BuildRequires:	cmake
 BuildRequires:	curl-devel
 BuildRequires:	gc
+%{?with_geany:BuildRequires:	geany}
 %{!?with_bootstrap:BuildRequires:	ldc}
 BuildRequires:	libconfig-devel
 BuildRequires:	libedit-devel
@@ -84,7 +86,6 @@ programmeurs ont travail qui doit être effectué.
 
 %package phobos-geany-tags
 Summary:	Support for enable autocompletion in geany
-BuildRequires:	geany
 Requires:	%{name} = %{version}-%{release}
 Requires:	geany
 BuildArch:	noarch
@@ -101,8 +102,10 @@ Active l'autocompletion pour pour la bibliothèque phobos dans geany
 %patch -P0 -p1
 %patch -P1 -p1
 
+%if %{with geany}
 # temp geany config directory for allow geany to generate tags
 install -d geany_config
+%endif
 
 %if %{with bootstrap}
 set -- *
@@ -138,8 +141,10 @@ cd ..
 
 %{__cmake} --build build
 
+%if %{with geany}
 # generate geany tags
 geany -c geany_config -g phobos.d.tags $(find runtime/phobos/std -name "*.d")
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -149,9 +154,11 @@ DESTDIR="$RPM_BUILD_ROOT" %{__cmake} --install build
 install -d $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d/
 install --mode=0644 %{SOURCE3} $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d/macros.ldc
 
+%if %{with geany}
 # geany tags
 install -d $RPM_BUILD_ROOT%{_datadir}/geany/tags/
 cp -p phobos.d.tags $RPM_BUILD_ROOT%{_datadir}/geany/tags/
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -202,6 +209,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libphobos2-ldc-shared.so.*.*
 %ghost %{_libdir}/libphobos2-ldc-shared.so.100
 
+%if %{with geany}
 %files phobos-geany-tags
 %defattr(644,root,root,755)
 %{_datadir}/geany/tags/phobos.d.tags
+%endif
