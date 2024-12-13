@@ -21,7 +21,7 @@ Patch0:		%{name}-include-path.patch
 Patch1:		%{name}-no-default-rpath.patch
 URL:		https://github.com/ldc-developers/ldc
 BuildRequires:	bash-completion
-BuildRequires:	cmake
+BuildRequires:	cmake >= 3.13
 BuildRequires:	curl-devel
 BuildRequires:	gc
 %{?with_geany:BuildRequires:	geany}
@@ -126,7 +126,7 @@ set -- *
 install -d build-bootstrap2
 cp -al "$@" build-bootstrap2
 tar xf %{SOURCE1}
-mv ldc2-%{bootstrap_version}-linux-x86_64 build-bootstrap1
+%{__mv} ldc2-%{bootstrap_version}-linux-x86_64 build-bootstrap1
 %endif
 
 %build
@@ -146,7 +146,7 @@ cd ..
 	-B build \
 	-DMULTILIB:BOOL=OFF \
 	-DINCLUDE_INSTALL_DIR:PATH=%{_prefix}/lib/ldc/%{_target_platform}/include/d \
-	-DBASH_COMPLETION_COMPLETIONSDIR:PATH=%{_datadir}/bash-completion/completions \
+	-DBASH_COMPLETION_COMPLETIONSDIR:PATH=%{bash_compdir} \
 %if %{with bootstrap}
 	-DD_COMPILER:PATH=$(pwd)/build-bootstrap2/build/bin/ldmd2 \
 %endif
@@ -162,16 +162,18 @@ geany -c geany_config -g phobos.d.tags $(find runtime/phobos/std -name "*.d")
 
 %install
 rm -rf $RPM_BUILD_ROOT
-DESTDIR="$RPM_BUILD_ROOT" %{__cmake} --install build
+
+DESTDIR="$RPM_BUILD_ROOT" \
+%{__cmake} --install build
 
 # macros for D package
-install -d $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d/
-install --mode=0644 %{SOURCE3} $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d/macros.ldc
+install -d $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d
+cp -p %{SOURCE3} $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d/macros.ldc
 
 %if %{with geany}
 # geany tags
-install -d $RPM_BUILD_ROOT%{_datadir}/geany/tags/
-cp -p phobos.d.tags $RPM_BUILD_ROOT%{_datadir}/geany/tags/
+install -d $RPM_BUILD_ROOT%{_datadir}/geany/tags
+cp -p phobos.d.tags $RPM_BUILD_ROOT%{_datadir}/geany/tags
 %endif
 
 %clean
@@ -193,7 +195,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_prefix}/lib/ldc/%{_target_platform}/include/d
 %{_prefix}/lib/ldc/%{_target_platform}/include/d/__builtins.di
 %{_prefix}/lib/ldc/%{_target_platform}/include/d/core
-%{_prefix}/lib/ldc/%{_target_platform}/include/d%{_sysconfdir}
+%{_prefix}/lib/ldc/%{_target_platform}/include/d/etc
 %{_prefix}/lib/ldc/%{_target_platform}/include/d/importc.h
 %{_prefix}/lib/ldc/%{_target_platform}/include/d/ldc
 %{_prefix}/lib/ldc/%{_target_platform}/include/d/object.d
@@ -203,24 +205,22 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdruntime-ldc-shared.so
 %{_libdir}/libphobos2-ldc-debug-shared.so
 %{_libdir}/libphobos2-ldc-shared.so
-%dir %{_datadir}/bash-completion
-%dir %{bash_compdir}
 %{bash_compdir}/ldc2
 
 %files druntime
 %defattr(644,root,root,755)
 %doc runtime/druntime/README.md runtime/README runtime/druntime/LICENSE.txt
-%{_libdir}/libdruntime-ldc-debug-shared.so.*.*
+%attr(755,root,root) %{_libdir}/libdruntime-ldc-debug-shared.so.*.*
 %ghost %{_libdir}/libdruntime-ldc-debug-shared.so.100
-%{_libdir}/libdruntime-ldc-shared.so.*.*
+%attr(755,root,root) %{_libdir}/libdruntime-ldc-shared.so.*.*
 %ghost %{_libdir}/libdruntime-ldc-shared.so.100
 
 %files phobos
 %defattr(644,root,root,755)
 %doc runtime/phobos/LICENSE_1_0.txt
-%{_libdir}/libphobos2-ldc-debug-shared.so.*.*
+%attr(755,root,root) %{_libdir}/libphobos2-ldc-debug-shared.so.*.*
 %ghost %{_libdir}/libphobos2-ldc-debug-shared.so.100
-%{_libdir}/libphobos2-ldc-shared.so.*.*
+%attr(755,root,root) %{_libdir}/libphobos2-ldc-shared.so.*.*
 %ghost %{_libdir}/libphobos2-ldc-shared.so.100
 
 %if %{with geany}
