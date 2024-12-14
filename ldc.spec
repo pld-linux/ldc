@@ -1,4 +1,5 @@
-# TODO: multilib
+# TODO:
+# - multilib on x86_64 (and aarch64?)
 #
 # Conditional build:
 %bcond_with	bootstrap	# bootstrap from pre-compiled binaries
@@ -18,6 +19,7 @@ Source0:	https://github.com/ldc-developers/ldc/releases/download/v%{version}-%{s
 # Source0-md5:	72e3dfd93a719320994531c5f41ad333
 Source1:	https://github.com/ldc-developers/ldc/releases/download/v%{bootstrap_version}/%{name}2-%{bootstrap_version}-linux-x86_64.tar.xz
 # Source1-md5:	67b1a78ad268fa9ae191cde1f6ec4f29
+# for aarch64 bootstrap: https://github.com/ldc-developers/ldc/releases/download/v1.39.0/ldc2-1.39.0-linux-aarch64.tar.xz
 Source3:	macros.%{name}
 Patch0:		%{name}-include-path.patch
 Patch1:		%{name}-no-default-rpath.patch
@@ -40,7 +42,7 @@ BuildRequires:	rpmbuild(macros) >= 2.008
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 BuildRequires:	zlib-devel
-ExclusiveArch:	%{x8664}
+ExclusiveArch:	%{x8664} aarch64
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # Unresolved symbols found: _D4core9exception6_storeG128v (core.exception._store)
