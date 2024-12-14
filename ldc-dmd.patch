@@ -1,0 +1,11 @@
+--- ldc-1.40.0-beta6-src/cmake/Modules/FindDCompiler.cmake.orig	2024-12-08 20:46:09.000000000 +0100
++++ ldc-1.40.0-beta6-src/cmake/Modules/FindDCompiler.cmake	2024-12-14 12:24:59.212337142 +0100
+@@ -64,7 +64,7 @@ if (D_COMPILER)
+                         OUTPUT_QUIET)
+         string(REGEX MATCH "^[^\r\n:]*" D_COMPILER_FE_VERSION "${D_COMPILER_FE_VERSION}")
+     else()
+-        string(REGEX MATCH " (D Compiler|based on DMD) v([0-9]+)\\.([0-9]+)" D_COMPILER_FE_VERSION "${D_COMPILER_VERSION_STRING}")
++        string(REGEX MATCH " (D Compiler|based on DMD) v?([0-9]+)\\.([0-9]+)" D_COMPILER_FE_VERSION "${D_COMPILER_VERSION_STRING}")
+         math(EXPR D_COMPILER_FE_VERSION ${CMAKE_MATCH_2}*1000+${CMAKE_MATCH_3}) # e.g., 2079
+     endif()
+     string(REGEX MATCH "^[^\r\n:]*" D_COMPILER_VERSION_STRING "${D_COMPILER_VERSION_STRING}")

@@ -21,6 +21,7 @@ Source1:	https://github.com/ldc-developers/ldc/releases/download/v%{bootstrap_ve
 Source3:	macros.%{name}
 Patch0:		%{name}-include-path.patch
 Patch1:		%{name}-no-default-rpath.patch
+Patch2:		%{name}-dmd.patch
 URL:		https://github.com/ldc-developers/ldc
 # for llvm < 16
 #BuildRequires:	SPIRV-LLVM-Translator-devel
@@ -119,6 +120,7 @@ Obsługa automatycznego dopełniania dla biblioteki Phobos w IDE geany.
 %setup -q -n %{name}-%{version}-%{subver}-src
 %patch -P0 -p1
 %patch -P1 -p1
+%patch -P2 -p1
 
 %if %{with geany}
 # temp geany config directory for allow geany to generate tags
