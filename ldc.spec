@@ -5,19 +5,19 @@
 %bcond_with	bootstrap	# bootstrap from pre-compiled binaries
 %bcond_without	geany		# geany autocompletion support
 
-%define	bootstrap_version 1.40.0
+%define	bootstrap_version 1.40.1
 Summary:	LLVM D Compiler
 Summary(pl.UTF-8):	Kompilator D oparty na LLVM
 Name:		ldc
-Version:	1.40.0
+Version:	1.40.1
 Release:	1
 # The DMD frontend in dmd/* GPL version 1 or artistic license
 # The files gen/asmstmt.cpp and gen/asm-*.hG PL version 2+ or artistic license
 License:	BSD
 Source0:	https://github.com/ldc-developers/ldc/releases/download/v%{version}/%{name}-%{version}-src.tar.gz
-# Source0-md5:	b38edf8f02ecd6208679c603668d416d
+# Source0-md5:	993d63ef12847076ecedd60dfd07ad72
 Source1:	https://github.com/ldc-developers/ldc/releases/download/v%{bootstrap_version}/%{name}2-%{bootstrap_version}-linux-x86_64.tar.xz
-# Source1-md5:	3c97eb640afc32fbb0adcfa83a0e7b20
+# Source1-md5:	efb96c01e629a5680b4d186f8a447ae0
 # for aarch64 bootstrap: https://github.com/ldc-developers/ldc/releases/download/v%{bootstrap_version}/ldc2-%{bootstrap_version}-linux-aarch64.tar.xz
 Source3:	macros.%{name}
 Patch0:		%{name}-include-path.patch
@@ -190,6 +190,9 @@ cp -p phobos.d.tags $RPM_BUILD_ROOT%{_datadir}/geany/tags
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
+
 %files
 %defattr(644,root,root,755)
 %doc README.md LICENSE
@@ -203,11 +206,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ldc-prune-cache
 %attr(755,root,root) %{_bindir}/timetrace2txt
 %attr(755,root,root) %{_libdir}/LLVMgold-ldc.so
-%{_libdir}/ldc_rt.dso.o
 %{_libdir}/libdruntime-ldc-debug-shared.so
 %{_libdir}/libdruntime-ldc-shared.so
 %{_libdir}/libphobos2-ldc-debug-shared.so
 %{_libdir}/libphobos2-ldc-shared.so
+%{_libdir}/libldc-jit.so
+%{_libdir}/libldc-jit-rt.a
+%{_libdir}/ldc_rt.dso.o
 %{_rpmconfigdir}/macros.d/macros.ldc
 %dir %{_prefix}/lib/ldc
 %dir %{_prefix}/lib/ldc/%{_target_platform}
@@ -228,6 +233,8 @@ rm -rf $RPM_BUILD_ROOT
 %ghost %{_libdir}/libdruntime-ldc-debug-shared.so.110
 %attr(755,root,root) %{_libdir}/libdruntime-ldc-shared.so.*.*
 %ghost %{_libdir}/libdruntime-ldc-shared.so.110
+%attr(755,root,root) %{_libdir}/libldc-jit.so.110.0
+%ghost %{_libdir}/libldc-jit.so.110
 
 %files phobos
 %defattr(644,root,root,755)
