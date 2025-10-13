@@ -194,6 +194,12 @@ rm -rf $RPM_BUILD_ROOT
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
+%post	druntime -p /sbin/ldconfig
+%postun	druntime -p /sbin/ldconfig
+
+%post	phobos -p /sbin/ldconfig
+%postun	phobos -p /sbin/ldconfig
+
 %files
 %defattr(644,root,root,755)
 %doc README.md LICENSE
