@@ -5,19 +5,19 @@
 %bcond_with	bootstrap	# bootstrap from pre-compiled binaries
 %bcond_without	geany		# geany autocompletion support
 
-%define	bootstrap_version 1.40.1
+%define	bootstrap_version 1.41.0
 Summary:	LLVM D Compiler
 Summary(pl.UTF-8):	Kompilator D oparty na LLVM
 Name:		ldc
-Version:	1.40.1
+Version:	1.41.0
 Release:	1
 # The DMD frontend in dmd/* GPL version 1 or artistic license
 # The files gen/asmstmt.cpp and gen/asm-*.hG PL version 2+ or artistic license
 License:	BSD
 Source0:	https://github.com/ldc-developers/ldc/releases/download/v%{version}/%{name}-%{version}-src.tar.gz
-# Source0-md5:	993d63ef12847076ecedd60dfd07ad72
+# Source0-md5:	0c80b38fbb78f321824ef06589a4d92d
 Source1:	https://github.com/ldc-developers/ldc/releases/download/v%{bootstrap_version}/%{name}2-%{bootstrap_version}-linux-x86_64.tar.xz
-# Source1-md5:	efb96c01e629a5680b4d186f8a447ae0
+# Source1-md5:	c6f2f648e919ee0bdc21bbd7a4ce3428
 # for aarch64 bootstrap: https://github.com/ldc-developers/ldc/releases/download/v%{bootstrap_version}/ldc2-%{bootstrap_version}-linux-aarch64.tar.xz
 Source3:	macros.%{name}
 Patch0:		%{name}-include-path.patch
@@ -26,7 +26,7 @@ Patch2:		%{name}-dmd.patch
 URL:		https://github.com/ldc-developers/ldc
 # for llvm < 16
 #BuildRequires:	SPIRV-LLVM-Translator-devel
-BuildRequires:	cmake >= 3.13
+BuildRequires:	cmake >= 3.16
 BuildRequires:	curl-devel
 BuildRequires:	gc
 %{?with_geany:BuildRequires:	geany}
@@ -35,7 +35,7 @@ BuildRequires:	libconfig-devel
 BuildRequires:	libedit-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	llvm-devel >= 15.0
-BuildRequires:	llvm-devel < 20
+BuildRequires:	llvm-devel < 21
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 2.008
 BuildRequires:	tar >= 1:1.22
@@ -158,6 +158,7 @@ cd ..
 %if %{with bootstrap}
 	-DD_COMPILER:PATH=$(pwd)/build-bootstrap2/build/bin/ldmd2 \
 %endif
+	-DLDC_DYNAMIC_COMPILE:BOOL=ON \
 	-DLDC_INSTALL_LLVM_RUNTIME_LIBS:BOOL=ON \
 	-DLDC_INSTALL_LTOPLUGIN:BOOL=ON \
 	-DLDC_WITH_LLD:BOOL=OFF \
@@ -206,13 +207,24 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ldc-prune-cache
 %attr(755,root,root) %{_bindir}/timetrace2txt
 %attr(755,root,root) %{_libdir}/LLVMgold-ldc.so
+%{_libdir}/ldc_rt.dso.o
 %{_libdir}/libdruntime-ldc-debug-shared.so
 %{_libdir}/libdruntime-ldc-shared.so
+%{_libdir}/libldc-jit-rt.a
+%{_libdir}/libldc-jit.so
+%{_libdir}/libldc_rt.asan.a
+%{_libdir}/libldc_rt.builtins.a
+%{_libdir}/libldc_rt.fuzzer.a
+%{_libdir}/libldc_rt.lsan.a
+%{_libdir}/libldc_rt.msan.a
+%{_libdir}/libldc_rt.profile.a
+%{_libdir}/libldc_rt.tsan.a
+%{_libdir}/libldc_rt.xray-basic.a
+%{_libdir}/libldc_rt.xray-fdr.a
+%{_libdir}/libldc_rt.xray-profiling.a
+%{_libdir}/libldc_rt.xray.a
 %{_libdir}/libphobos2-ldc-debug-shared.so
 %{_libdir}/libphobos2-ldc-shared.so
-%{_libdir}/libldc-jit.so
-%{_libdir}/libldc-jit-rt.a
-%{_libdir}/ldc_rt.dso.o
 %{_rpmconfigdir}/macros.d/macros.ldc
 %dir %{_prefix}/lib/ldc
 %dir %{_prefix}/lib/ldc/%{_target_platform}
@@ -230,19 +242,19 @@ rm -rf $RPM_BUILD_ROOT
 %files druntime
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libdruntime-ldc-debug-shared.so.*.*
-%ghost %{_libdir}/libdruntime-ldc-debug-shared.so.110
+%ghost %{_libdir}/libdruntime-ldc-debug-shared.so.111
 %attr(755,root,root) %{_libdir}/libdruntime-ldc-shared.so.*.*
-%ghost %{_libdir}/libdruntime-ldc-shared.so.110
-%attr(755,root,root) %{_libdir}/libldc-jit.so.110.0
-%ghost %{_libdir}/libldc-jit.so.110
+%ghost %{_libdir}/libdruntime-ldc-shared.so.111
+%attr(755,root,root) %{_libdir}/libldc-jit.so.111.0
+%ghost %{_libdir}/libldc-jit.so.111
 
 %files phobos
 %defattr(644,root,root,755)
 %doc runtime/phobos/{LICENSE_1_0.txt,README.md}
 %attr(755,root,root) %{_libdir}/libphobos2-ldc-debug-shared.so.*.*
-%ghost %{_libdir}/libphobos2-ldc-debug-shared.so.110
+%ghost %{_libdir}/libphobos2-ldc-debug-shared.so.111
 %attr(755,root,root) %{_libdir}/libphobos2-ldc-shared.so.*.*
-%ghost %{_libdir}/libphobos2-ldc-shared.so.110
+%ghost %{_libdir}/libphobos2-ldc-shared.so.111
 
 %if %{with geany}
 %files phobos-geany-tags
