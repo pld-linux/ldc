@@ -4,6 +4,7 @@
 # Conditional build:
 %bcond_with	bootstrap	# bootstrap from pre-compiled binaries
 %bcond_without	geany		# geany autocompletion support
+%bcond_with	jit		# dynamic compilation support (JIT) (LLVM 18/19 only)
 
 %define	bootstrap_version 1.41.0
 Summary:	LLVM D Compiler
@@ -37,7 +38,7 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	llvm-devel >= 15.0
 BuildRequires:	llvm-devel < 21
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 2.008
+BuildRequires:	rpmbuild(macros) >= 2.047
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 BuildRequires:	zlib-devel
@@ -158,7 +159,7 @@ cd ..
 %if %{with bootstrap}
 	-DD_COMPILER:PATH=$(pwd)/build-bootstrap2/build/bin/ldmd2 \
 %endif
-	-DLDC_DYNAMIC_COMPILE:BOOL=ON \
+	-DLDC_DYNAMIC_COMPILE:BOOL=%{__ON_OFF jit} \
 	-DLDC_INSTALL_LLVM_RUNTIME_LIBS:BOOL=ON \
 	-DLDC_INSTALL_LTOPLUGIN:BOOL=ON \
 	-DLDC_WITH_LLD:BOOL=OFF \
@@ -216,8 +217,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/ldc_rt.dso.o
 %{_libdir}/libdruntime-ldc-debug-shared.so
 %{_libdir}/libdruntime-ldc-shared.so
+%if %{with jit}
 %{_libdir}/libldc-jit-rt.a
 %{_libdir}/libldc-jit.so
+%endif
 %{_libdir}/libldc_rt.asan.a
 %{_libdir}/libldc_rt.builtins.a
 %{_libdir}/libldc_rt.fuzzer.a
@@ -251,8 +254,10 @@ rm -rf $RPM_BUILD_ROOT
 %ghost %{_libdir}/libdruntime-ldc-debug-shared.so.111
 %attr(755,root,root) %{_libdir}/libdruntime-ldc-shared.so.*.*
 %ghost %{_libdir}/libdruntime-ldc-shared.so.111
+%if %{with jit}
 %attr(755,root,root) %{_libdir}/libldc-jit.so.111.0
 %ghost %{_libdir}/libldc-jit.so.111
+%endif
 
 %files phobos
 %defattr(644,root,root,755)
