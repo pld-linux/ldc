@@ -9,16 +9,16 @@
 %define		phase		beta2
 %define		rel		1
 
-%define	bootstrap_version 1.42.0%{?phase:-%{phase}}
+%define	bootstrap_version 1.42.0-%{phase}
 Summary:	LLVM D Compiler
 Summary(pl.UTF-8):	Kompilator D oparty na LLVM
 Name:		ldc
 Version:	1.42.0
-Release:	%{?phase:0.%{phase}.}%{rel}
+Release:	0.%{phase}.%{rel}
 # The DMD frontend in dmd/* GPL version 1 or artistic license
 # The files gen/asmstmt.cpp and gen/asm-*.hG PL version 2+ or artistic license
 License:	BSD
-Source0:	https://github.com/ldc-developers/ldc/releases/download/v%{version}%{?phase:-%{phase}}/%{name}-%{version}%{?phase:-%{phase}}-src.tar.gz
+Source0:	https://github.com/ldc-developers/ldc/releases/download/v%{version}-%{phase}/%{name}-%{version}-%{phase}-src.tar.gz
 # Source0-md5:	76e1ea577099dc7646eb9237575ad011
 Source1:	https://github.com/ldc-developers/ldc/releases/download/v%{bootstrap_version}/%{name}2-%{bootstrap_version}-linux-x86_64.tar.xz
 # Source1-md5:	9a7a6aed354e19e6cf3b21875da9810d
@@ -124,7 +124,7 @@ Active l'autocompletion pour pour la bibliothèque phobos dans geany
 Obsługa automatycznego dopełniania dla biblioteki Phobos w IDE geany.
 
 %prep
-%setup -q -n %{name}-%{version}%{?phase:-%{phase}}-src
+%setup -q -n %{name}-%{version}-%{phase}-src
 %patch -P0 -p1
 %patch -P1 -p1
 %patch -P2 -p1
