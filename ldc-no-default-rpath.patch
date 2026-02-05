@@ -1,14 +1,11 @@
-Description:  Don't set a default rpath in global LDC configuration.
-Author: Matthias Klumpp <mak@debian.org>
-
---- a/runtime/CMakeLists.txt
-+++ b/runtime/CMakeLists.txt
-@@ -247,7 +247,7 @@
+--- ldc-1.42.0-beta1-src/runtime/CMakeLists.txt.orig	2025-12-19 13:54:08.000000000 +0100
++++ ldc-1.42.0-beta1-src/runtime/CMakeLists.txt	2026-02-01 14:15:09.737813213 +0100
+@@ -276,7 +276,7 @@
  # Default -rpath linker option when linking against shared libraries.
  if(SHARED_LIBS_SUPPORTED)
-     set(SHARED_LIBS_RPATH         "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}")
--    set(SHARED_LIBS_INSTALL_RPATH "${CMAKE_INSTALL_LIBDIR}")
-+    set(SHARED_LIBS_INSTALL_RPATH "")
+     set(build_rpath   "${build_libdir}")
+-    set(install_rpath "${install_libdir}")
++    set(install_rpath "")
  endif()
  
- # Only have either shared or static libs?
+ # This is e.g. set from `ldc-build-runtime --installWithSuffix`.

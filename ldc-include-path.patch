@@ -1,19 +1,11 @@
-Description: Fix ldc.conf to search in right paths
-
- ldc (1:1.1.0-2) unstable; urgency=medium
- .
-   * Multiarch enable
-   * Install includes separately to avoid clash with gdc (Closes: #827211)
-Author: Konstantinos Margaritis <markos@debian.org>
-Bug-Debian: https://bugs.debian.org/827211
-
---- a/ldc2_install.conf.in
-+++ b/ldc2_install.conf.in
-@@ -23,6 +23,7 @@
-     // default switches appended after all explicit command-line switches
-     post-switches = [
-         "-I@INCLUDE_INSTALL_DIR@",
-+        "-I/usr/include/d",
-     ];
-     // default directories to be searched for libraries when linking
-     lib-dirs = [
+--- ldc-1.42.0-beta1-src/CMakeLists.txt.orig	2025-12-19 13:54:08.000000000 +0100
++++ ldc-1.42.0-beta1-src/CMakeLists.txt	2026-02-01 14:01:50.647487773 +0100
+@@ -976,7 +976,7 @@
+ 
+     INSTALL
+     SWITCHES ${switches}
+-    POST_SWITCHES "-I${INCLUDE_INSTALL_DIR}"
++    POST_SWITCHES "-I${INCLUDE_INSTALL_DIR}" "-I/usr/include/d"
+ )
+ 
+ set(wasm_switches)
