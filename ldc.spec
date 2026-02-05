@@ -27,6 +27,8 @@ Patch2:		%{name}-dmd.patch
 URL:		https://github.com/ldc-developers/ldc
 # for llvm < 16
 #BuildRequires:	SPIRV-LLVM-Translator-devel
+# source of compiler runtime files
+BuildRequires:	clang
 BuildRequires:	cmake >= 3.16
 BuildRequires:	curl-devel
 BuildRequires:	gc
