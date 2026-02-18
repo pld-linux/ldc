@@ -6,7 +6,7 @@
 %bcond_without	geany		# geany autocompletion support
 %bcond_with	jit		# dynamic compilation support (JIT) (LLVM 18/19 only)
 
-%define		phase		beta2
+%define		phase		beta3
 %define		rel		1
 
 %define	bootstrap_version 1.42.0-%{phase}
@@ -19,9 +19,9 @@ Release:	0.%{phase}.%{rel}
 # The files gen/asmstmt.cpp and gen/asm-*.hG PL version 2+ or artistic license
 License:	BSD
 Source0:	https://github.com/ldc-developers/ldc/releases/download/v%{version}-%{phase}/%{name}-%{version}-%{phase}-src.tar.gz
-# Source0-md5:	76e1ea577099dc7646eb9237575ad011
+# Source0-md5:	71746fd7d4f9552c4a62173873a3f655
 Source1:	https://github.com/ldc-developers/ldc/releases/download/v%{bootstrap_version}/%{name}2-%{bootstrap_version}-linux-x86_64.tar.xz
-# Source1-md5:	9a7a6aed354e19e6cf3b21875da9810d
+# Source1-md5:	86f3c4ccf82964caad524e8e37974570
 # for aarch64 bootstrap: https://github.com/ldc-developers/ldc/releases/download/v%{bootstrap_version}/ldc2-%{bootstrap_version}-linux-aarch64.tar.xz
 Source3:	macros.%{name}
 Patch0:		%{name}-include-path.patch
