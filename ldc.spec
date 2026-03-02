@@ -6,22 +6,21 @@
 %bcond_without	geany		# geany autocompletion support
 %bcond_with	jit		# dynamic compilation support (JIT) (LLVM 18/19 only)
 
-%define		phase		beta3
 %define		rel		1
 
-%define	bootstrap_version 1.42.0-%{phase}
+%define	bootstrap_version 1.42.0
 Summary:	LLVM D Compiler
 Summary(pl.UTF-8):	Kompilator D oparty na LLVM
 Name:		ldc
 Version:	1.42.0
-Release:	0.%{phase}.%{rel}
+Release:	%{rel}
 # The DMD frontend in dmd/* GPL version 1 or artistic license
 # The files gen/asmstmt.cpp and gen/asm-*.hG PL version 2+ or artistic license
 License:	BSD
-Source0:	https://github.com/ldc-developers/ldc/releases/download/v%{version}-%{phase}/%{name}-%{version}-%{phase}-src.tar.gz
-# Source0-md5:	71746fd7d4f9552c4a62173873a3f655
+Source0:	https://github.com/ldc-developers/ldc/releases/download/v%{version}/%{name}-%{version}-src.tar.gz
+# Source0-md5:	a18a249c2a3d487f79b831fef3d446b9
 Source1:	https://github.com/ldc-developers/ldc/releases/download/v%{bootstrap_version}/%{name}2-%{bootstrap_version}-linux-x86_64.tar.xz
-# Source1-md5:	86f3c4ccf82964caad524e8e37974570
+# Source1-md5:	1b813099a0eaeff0b7353780c0b43c8a
 # for aarch64 bootstrap: https://github.com/ldc-developers/ldc/releases/download/v%{bootstrap_version}/ldc2-%{bootstrap_version}-linux-aarch64.tar.xz
 Source3:	macros.%{name}
 Patch0:		%{name}-include-path.patch
@@ -124,7 +123,7 @@ Active l'autocompletion pour pour la bibliothèque phobos dans geany
 Obsługa automatycznego dopełniania dla biblioteki Phobos w IDE geany.
 
 %prep
-%setup -q -n %{name}-%{version}-%{phase}-src
+%setup -q -n %{name}-%{version}-src
 %patch -P0 -p1
 %patch -P1 -p1
 %patch -P2 -p1
