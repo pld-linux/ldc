@@ -6,7 +6,7 @@
 %bcond_without	geany		# geany autocompletion support
 %bcond_with	jit		# dynamic compilation support (JIT) (LLVM 18/19 only)
 
-%define		rel		2
+%define		rel		3
 
 %define	bootstrap_version 1.42.0
 Summary:	LLVM D Compiler
@@ -26,6 +26,7 @@ Source3:	macros.%{name}
 Patch0:		%{name}-include-path.patch
 Patch1:		%{name}-no-default-rpath.patch
 Patch2:		%{name}-dmd.patch
+Patch3:		git.patch
 URL:		https://github.com/ldc-developers/ldc
 # for llvm < 16
 #BuildRequires:	SPIRV-LLVM-Translator-devel
@@ -40,7 +41,7 @@ BuildRequires:	libconfig-devel
 BuildRequires:	libedit-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	llvm-devel >= 15.0
-BuildRequires:	llvm-devel < 22
+BuildRequires:	llvm-devel < 23
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 2.047
 BuildRequires:	tar >= 1:1.22
@@ -127,6 +128,7 @@ Obsługa automatycznego dopełniania dla biblioteki Phobos w IDE geany.
 %patch -P0 -p1
 %patch -P1 -p1
 %patch -P2 -p1
+%patch -P3 -p1
 
 %if %{with geany}
 # temp geany config directory for allow geany to generate tags
