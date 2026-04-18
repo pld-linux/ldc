@@ -6,7 +6,7 @@
 %bcond_without	geany		# geany autocompletion support
 %bcond_with	jit		# dynamic compilation support (JIT) (LLVM 18/19 only)
 
-%define		rel		1
+%define		rel		2
 
 %define	bootstrap_version 1.42.0
 Summary:	LLVM D Compiler
