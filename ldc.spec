@@ -6,27 +6,26 @@
 %bcond_without	geany		# geany autocompletion support
 %bcond_with	jit		# dynamic compilation support (JIT) (LLVM 18/19 only)
 
-%define		rel		3
+%define		rel		1
 
-%define	bootstrap_version 1.42.0
+%define	bootstrap_version 1.43.0
 Summary:	LLVM D Compiler
 Summary(pl.UTF-8):	Kompilator D oparty na LLVM
 Name:		ldc
-Version:	1.42.0
+Version:	1.43.0
 Release:	%{rel}
 # The DMD frontend in dmd/* GPL version 1 or artistic license
 # The files gen/asmstmt.cpp and gen/asm-*.hG PL version 2+ or artistic license
 License:	BSD
 Source0:	https://github.com/ldc-developers/ldc/releases/download/v%{version}/%{name}-%{version}-src.tar.gz
-# Source0-md5:	a18a249c2a3d487f79b831fef3d446b9
+# Source0-md5:	a07371f8d988010e98eed3143367c1fe
 Source1:	https://github.com/ldc-developers/ldc/releases/download/v%{bootstrap_version}/%{name}2-%{bootstrap_version}-linux-x86_64.tar.xz
-# Source1-md5:	1b813099a0eaeff0b7353780c0b43c8a
+# Source1-md5:	e02a0763e81134ffba110f39b48f0565
 # for aarch64 bootstrap: https://github.com/ldc-developers/ldc/releases/download/v%{bootstrap_version}/ldc2-%{bootstrap_version}-linux-aarch64.tar.xz
 Source3:	macros.%{name}
 Patch0:		%{name}-include-path.patch
 Patch1:		%{name}-no-default-rpath.patch
 Patch2:		%{name}-dmd.patch
-Patch3:		git.patch
 URL:		https://github.com/ldc-developers/ldc
 # for llvm < 16
 #BuildRequires:	SPIRV-LLVM-Translator-devel
@@ -128,7 +127,6 @@ Obsługa automatycznego dopełniania dla biblioteki Phobos w IDE geany.
 %patch -P0 -p1
 %patch -P1 -p1
 %patch -P2 -p1
-%patch -P3 -p1
 
 %if %{with geany}
 # temp geany config directory for allow geany to generate tags
@@ -257,21 +255,21 @@ rm -rf $RPM_BUILD_ROOT
 %files druntime
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libdruntime-ldc-debug-shared.so.*.*
-%ghost %{_libdir}/libdruntime-ldc-debug-shared.so.112
+%ghost %{_libdir}/libdruntime-ldc-debug-shared.so.113
 %attr(755,root,root) %{_libdir}/libdruntime-ldc-shared.so.*.*
-%ghost %{_libdir}/libdruntime-ldc-shared.so.112
+%ghost %{_libdir}/libdruntime-ldc-shared.so.113
 %if %{with jit}
-%attr(755,root,root) %{_libdir}/libldc-jit.so.112.0
-%ghost %{_libdir}/libldc-jit.so.112
+%attr(755,root,root) %{_libdir}/libldc-jit.so.113.0
+%ghost %{_libdir}/libldc-jit.so.113
 %endif
 
 %files phobos
 %defattr(644,root,root,755)
 %doc runtime/phobos/{LICENSE_1_0.txt,README.md}
 %attr(755,root,root) %{_libdir}/libphobos2-ldc-debug-shared.so.*.*
-%ghost %{_libdir}/libphobos2-ldc-debug-shared.so.112
+%ghost %{_libdir}/libphobos2-ldc-debug-shared.so.113
 %attr(755,root,root) %{_libdir}/libphobos2-ldc-shared.so.*.*
-%ghost %{_libdir}/libphobos2-ldc-shared.so.112
+%ghost %{_libdir}/libphobos2-ldc-shared.so.113
 
 %if %{with geany}
 %files phobos-geany-tags

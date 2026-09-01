@@ -8,4 +8,4 @@
 +    POST_SWITCHES "-I${INCLUDE_INSTALL_DIR}" "-I/usr/include/d"
  )
  
- set(wasm_switches)
+ # Add a base config for all wasm targets, setting some linker defaults and enabling EH.
