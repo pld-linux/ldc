@@ -6,7 +6,7 @@
 %bcond_without	geany		# geany autocompletion support
 %bcond_with	jit		# dynamic compilation support (JIT) (LLVM 18/19 only)
 
-%define		rel		1
+%define		rel		2
 
 %define	bootstrap_version 1.43.0
 Summary:	LLVM D Compiler
@@ -227,7 +227,6 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 %{_libdir}/libldc_rt.asan.a
 %{_libdir}/libldc_rt.builtins.a
-%{_libdir}/libldc_rt.fuzzer.a
 %{_libdir}/libldc_rt.lsan.a
 %{_libdir}/libldc_rt.msan.a
 %{_libdir}/libldc_rt.profile.a
