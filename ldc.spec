@@ -46,6 +46,7 @@ BuildRequires:	rpmbuild(macros) >= 2.047
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 BuildRequires:	zlib-devel
+%{?with_bootstrap:BuildConflicts:	ldc}
 ExclusiveArch:	%{x8664} aarch64
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
